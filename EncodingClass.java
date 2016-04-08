@@ -19,7 +19,6 @@ public class EncodingClass {
     System.out.println(str.toString());
   }
 
-  // Falta hacer un loop para 
   public static byte[] encodeBigEndian(long val, int size){
     byte[] ret = new byte[size];
     for(int i = 0;  i < size; i++){
@@ -28,10 +27,25 @@ public class EncodingClass {
     return ret;
   } 
 
+  public static byte[] catByteArr(byte[] a, byte[] b){
+    byte[] c = new byte[a.length + b.length];
+    for(int i = 0; i < a.length; i++){
+      c[i] = a[i];
+    }
+    for(int i = a.length; i < c.length; i++){
+      c[i] = b[i - a.length];
+    }
+    return c;
+  }
+
   public static void main(String[] args){
     System.out.println("byte:" + byte_size + " short:" + 
         short_size + " int:" + int_size + " long:" + long_size);
-    byte[] byte10 = encodeBigEndian(123456787654321L, long_size);
-    printByteArray(byte10); 
+    byte[] byte2  = encodeBigEndian(345, short_size);
+    byte[] byte1  = encodeBigEndian(84, byte_size);
+    byte[] byte3  = catByteArr(byte2, byte1);
+    byte[] byte8  = encodeBigEndian(1234567654321L, long_size);
+    byte[] byte11 = catByteArr(byte3, byte8);
+    printByteArray(byte11); 
   }
 }
